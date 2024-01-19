@@ -44,8 +44,130 @@
 
 .price-increasing {
   color: rgb(32, 152, 32);
+  animation: arrowUp 1s ease 0s 1 normal forwards;
 }
 
 .price-decreasing {
   color: rgb(255, 70, 70);
+  animation: arrowDown 1s ease 0s 1 normal forwards;
+}
+
+.bg-dark {
+  background-color: #212529;
+}
+
+.boders-orange {
+  border: 1px solid #f77f00;
+}
+
+.bg-grad {
+  background: rgb(0, 8, 20);
+  background: linear-gradient(
+    32deg,
+    rgba(0, 8, 20, 1) 0%,
+    rgba(0, 29, 61, 1) 49%,
+    rgba(0, 53, 102, 1) 100%
+  );
+}
+
+.mb-3 {
+  margin-bottom: 1em;
+}
+
+.shadows {
+  box-shadow: 10px 10px 11px 0px rgba(0, 0, 0, 0.22);
+  -webkit-box-shadow: 10px 10px 11px 0px rgba(0, 0, 0, 0.22);
+  -moz-box-shadow: 10px 10px 11px 0px rgba(0, 0, 0, 0.22);
+}
+
+@keyframes arrowUp {
+  0% {
+    animation-timing-function: ease-in;
+    opacity: 1;
+    transform: translateY(-45px);
+  }
+
+  24% {
+    opacity: 1;
+  }
+
+  40% {
+    animation-timing-function: ease-in;
+    transform: translateY(-14px);
+  }
+
+  65% {
+    animation-timing-function: ease-in;
+    transform: translateY(-8px);
+  }
+
+  82% {
+    animation-timing-function: ease-in;
+    transform: translateY(-6px);
+  }
+
+  93% {
+    animation-timing-function: ease-in;
+    transform: translateY(-4px);
+  }
+
+  25%,
+  55%,
+  75%,
+  87% {
+    animation-timing-function: ease-out;
+    transform: translateY(0px);
+  }
+
+  100% {
+    animation-timing-function: ease-out;
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+@keyframes arrowDown {
+  0% {
+    animation-timing-function: ease-in;
+    opacity: 1;
+    transform: translateY(45px);
+  }
+
+  24% {
+    opacity: 1;
+  }
+
+  40% {
+    animation-timing-function: ease-in;
+    transform: translateY(24px);
+  }
+
+  65% {
+    animation-timing-function: ease-in;
+    transform: translateY(12px);
+  }
+
+  82% {
+    animation-timing-function: ease-in;
+    transform: translateY(6px);
+  }
+
+  93% {
+    animation-timing-function: ease-in;
+    transform: translateY(4px);
+  }
+
+  25%,
+  55%,
+  75%,
+  87% {
+    animation-timing-function: ease-out;
+    transform: translateY(0px);
+  }
+
+  100% {
+    animation-timing-function: ease-out;
+    opacity: 1;
+    transform: translateY(0px);
+  }
 }

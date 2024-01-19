@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { BitcoinvalueService } from '../services/bitcoinvalue.service';
 import { CurrencyValue } from '../models/CurrencyValue.model';
-import { BitcoinData } from '../models/bit-coin.model';
 import { Subscription, interval } from 'rxjs';
-import { elements } from 'chart.js';
+import { Storage } from '@ionic/storage-angular';
+import { IonicStorageModule } from '@ionic/storage-angular';
+import { OfflinemodeService } from '../services/offlinemode.service';
 
 @Component({
   selector: 'app-home',
@@ -11,22 +12,31 @@ import { elements } from 'chart.js';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  public offlineMessage: string = '';
+  public offlineTitle: string = '';
   public bitcoinPrices!: CurrencyValue;
   public bitcoinPriceNow: number = 0;
   public bitcoinPricePrevious: number = 0;
   public bitcoinDataForTwoWeeks: any;
   private refreshInterval: Subscription = new Subscription();
 
-  constructor(private bitcoinValueService: BitcoinvalueService) {}
+  constructor(
+    private bitcoinValueService: BitcoinvalueService,
+    private offlinemodeService: OfflinemodeService,
+    private storage: Storage
+  ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.storage.create();
+
+    this.loadLocalData();
+
     this.refreshData();
     this.info2Weeks();
     this.refreshInterval = interval(15000).subscribe(() => {
       this.refreshData();
+      // this.info2Weeks();
     });
-
-    // console.log(this.bitcoinDataForTwoWeeks);
   }
 
   ngOnDestroy() {
@@ -35,15 +45,21 @@ export class HomePage {
     }
   }
 
-  private refreshData() {
+  private async refreshData() {
     this.bitcoinValueService.getBitCoinPices().subscribe(
       (prices: CurrencyValue) => {
         this.bitcoinPricePrevious = this.bitcoinPriceNow;
         this.bitcoinPrices = prices;
         this.bitcoinPriceNow = this.bitcoinPrices.USD;
+
+        this.storage.set('bitcoinPriceNow', this.bitcoinPriceNow);
+        this.offlineMessage = '';
+        this.offlineTitle = '';
       },
       (error) => {
-        console.error('Error obteniendo precios de Bitcoin:', error);
+        this.loadLocalData();
+        this.offlineMessage = 'no hay conexión a internet';
+        this.offlineTitle = 'OFFLINE';
       }
     );
   }
@@ -74,14 +90,29 @@ export class HomePage {
           item['closeEUR'] = (item.close * _eur).toFixed(2);
         });
         console.log(this.bitcoinDataForTwoWeeks);
+        this.storage.set('bitcoinDataForTwoWeeks', this.bitcoinDataForTwoWeeks);
       },
       (error) => {
-        console.error('Error obteniendo precios de Bitcoin:', error);
+        this.loadLocalData();
       }
     );
   }
 
   public isPriceIncreasing(): boolean {
     return this.bitcoinPriceNow > this.bitcoinPricePrevious;
+  }
+
+  private loadLocalData() {
+    this.storage.get('bitcoinPriceNow').then((price) => {
+      if (price !== null) {
+        this.bitcoinPriceNow = price;
+      }
+    });
+
+    this.storage.get('bitcoinDataForTwoWeeks').then((data) => {
+      if (data !== null) {
+        this.bitcoinDataForTwoWeeks = data;
+      }
+    });
   }
 }

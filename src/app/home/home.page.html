@@ -1,11 +1,16 @@
-<ion-header [translucent]="true">
+<ion-header
+  [translucent]="true"
+  class="boders-orange"
+  style="text-align: center"
+>
   <ion-toolbar>
-    <ion-title>BitCoin</ion-title>
+    <ion-title>BitCoin {{offlineTitle}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-card>
+<ion-content [fullscreen]="true" class="bg-grad">
+  <p style="color: rgb(255, 56, 56); text-align: center">{{offlineMessage}}</p>
+  <ion-card class="bg-dark boders-orange">
     <ion-card-header>
       <ion-row>
         <ion-col size="auto"
@@ -13,6 +18,7 @@
         >
         <ion-col
           [ngClass]="{'price-increasing': isPriceIncreasing(), 'price-decreasing': !isPriceIncreasing()}"
+          class="scale-in-center"
           >{{ isPriceIncreasing() ? '🢁' : '🢃' }}</ion-col
         >
       </ion-row>
@@ -47,13 +53,13 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card>
+  <ion-card class="boders-orange">
     <ion-accordion-group *ngFor="let data of bitcoinDataForTwoWeeks">
       <ion-accordion value="first">
-        <ion-item slot="header" color="light">
+        <ion-item slot="header" class="bg-dark">
           <ion-label>{{data.time}}</ion-label>
         </ion-item>
-        <div class="ion-padding boder-r" slot="content">
+        <div class="ion-padding bg-grad mb-3 shadows" slot="content">
           <ion-grid [fixed]="true">
             <ion-row>
               <ion-col size="auto"

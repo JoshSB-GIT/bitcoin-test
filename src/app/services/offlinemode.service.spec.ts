@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DatastorageService } from './offlinemode.service';
+import { OfflinemodeService } from './offlinemode.service';
 
-describe('DatastorageService', () => {
-  let service: DatastorageService;
+describe('OfflinemodeService', () => {
+  let service: OfflinemodeService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(DatastorageService);
+    service = TestBed.inject(OfflinemodeService);
   });
 
   it('should be created', () => {
