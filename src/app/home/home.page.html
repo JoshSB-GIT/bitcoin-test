@@ -1,16 +1,20 @@
-<ion-header
-  [translucent]="true"
-  class="boders-orange"
-  style="text-align: center"
->
+<ion-header [translucent]="true" class="">
   <ion-toolbar>
-    <ion-title>BitCoin {{offlineTitle}}</ion-title>
+    <div class="ja-center">
+      <h2>BitCoin {{offlineTitle}}</h2>
+      <img
+        src="../../assets/img/bitcoin (1).png"
+        height="30"
+        width="30"
+        alt=""
+      />
+    </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="bg-grad">
   <p style="color: rgb(255, 56, 56); text-align: center">{{offlineMessage}}</p>
-  <ion-card class="bg-dark boders-orange">
+  <ion-card class="bg-dark">
     <ion-card-header>
       <ion-row>
         <ion-col size="auto"
@@ -52,14 +56,25 @@
       </ion-grid>
     </ion-card-content>
   </ion-card>
-
-  <ion-card class="boders-orange">
+  <div class="" style="color: #dbdbdb;">
+    <div class="ja-center">
+      <h2>Datos historicos</h2>
+      <img
+        src="../../assets/img/calendar.png"
+        height="25"
+        width="25"
+        alt=""
+        style="margin-top: 0.7em; margin-left: 5px"
+      />
+    </div>
+  </div>
+  <ion-card style="color: #dbdbdb;">
     <ion-accordion-group *ngFor="let data of bitcoinDataForTwoWeeks">
       <ion-accordion value="first">
         <ion-item slot="header" class="bg-dark">
           <ion-label>{{data.time}}</ion-label>
         </ion-item>
-        <div class="ion-padding bg-grad mb-3 shadows" slot="content">
+        <div class="ion-padding bg-grad mb-3 shadows border-b" slot="content">
           <ion-grid [fixed]="true">
             <ion-row>
               <ion-col size="auto"

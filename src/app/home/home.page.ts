@@ -1,10 +1,32 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { BitcoinvalueService } from '../services/bitcoinvalue.service';
 import { CurrencyValue } from '../models/CurrencyValue.model';
 import { Subscription, interval } from 'rxjs';
 import { Storage } from '@ionic/storage-angular';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { OfflinemodeService } from '../services/offlinemode.service';
+import {
+  ApexAxisChartSeries,
+  ApexChart,
+  ChartComponent,
+  ApexDataLabels,
+  ApexPlotOptions,
+  ApexYAxis,
+  ApexTitleSubtitle,
+  ApexXAxis,
+  ApexFill,
+} from 'ng-apexcharts';
+
+export type ChartOptions = {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  dataLabels: ApexDataLabels;
+  plotOptions: ApexPlotOptions;
+  yaxis: ApexYAxis;
+  xaxis: ApexXAxis;
+  fill: ApexFill;
+  title: ApexTitleSubtitle;
+};
 
 @Component({
   selector: 'app-home',
@@ -19,6 +41,9 @@ export class HomePage {
   public bitcoinPricePrevious: number = 0;
   public bitcoinDataForTwoWeeks: any;
   private refreshInterval: Subscription = new Subscription();
+
+  @ViewChild('chart') chart!: ChartComponent;
+  public chartOptions!: Partial<ChartOptions>;
 
   constructor(
     private bitcoinValueService: BitcoinvalueService,

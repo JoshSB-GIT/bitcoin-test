@@ -61,17 +61,36 @@
 }
 
 .bg-grad {
-  background: rgb(0, 8, 20);
+  background: rgb(1, 40, 71);
   background: linear-gradient(
     32deg,
-    rgba(0, 8, 20, 1) 0%,
-    rgba(0, 29, 61, 1) 49%,
-    rgba(0, 53, 102, 1) 100%
+    rgba(1, 40, 71, 1) 0%,
+    rgba(8, 38, 54, 1) 49%,
+    rgba(0, 13, 19, 1) 100%
   );
 }
 
 .mb-3 {
   margin-bottom: 1em;
+}
+
+.cont h2{
+  margin: 2em 0 1em 1em;
+}
+
+.ja-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.ja-center img {
+  margin-left: 5px;
+}
+
+.border-b {
+  border-bottom: 1px solid #f77f00;
 }
 
 .shadows {

@@ -8,6 +8,7 @@ import { HomePageRoutingModule } from './home-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage-angular';
 
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 @NgModule({
   imports: [
@@ -16,8 +17,9 @@ import { IonicStorageModule } from '@ionic/storage-angular';
     IonicModule,
     HomePageRoutingModule,
     HttpClientModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    NgApexchartsModule,
   ],
-  declarations: [HomePage]
+  declarations: [HomePage],
 })
 export class HomePageModule {}
