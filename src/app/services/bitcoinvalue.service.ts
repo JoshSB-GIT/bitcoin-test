@@ -18,11 +18,13 @@ export class BitcoinvalueService {
     return this.http.get<CurrencyValue>(data);
   }
 
-  public get2Weeks(date: Date): Observable<BitcoinData> {
-    const toTs = Math.floor(date.getTime() / 1000);
+  public get2WeeksClose(tsym: string): Observable<BitcoinData> {
+    const currentDate = new Date();
+    const toTs = Math.floor(currentDate.getTime() / 1000);
+    const limit = 14;
+    const dataEndpoint = `
+    ${this.URL}data/v2/histoday?fsym=BTC&tsym=${tsym}&limit=${limit}&toTs=${toTs}`;
 
-    const dataEndpoint = `${this.URL}
-          /data/v2/histoday?fsym=BTC&tsym=USD&limit=14&toTs=${toTs}`;
     return this.http.get<BitcoinData>(dataEndpoint);
   }
 }

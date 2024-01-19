@@ -3,6 +3,7 @@ import { BitcoinvalueService } from '../services/bitcoinvalue.service';
 import { CurrencyValue } from '../models/CurrencyValue.model';
 import { BitcoinData } from '../models/bit-coin.model';
 import { Subscription, interval } from 'rxjs';
+import { elements } from 'chart.js';
 
 @Component({
   selector: 'app-home',
@@ -10,18 +11,22 @@ import { Subscription, interval } from 'rxjs';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  bitcoinPrices!: CurrencyValue;
-  bitcoinPriceNow: number = 0;
-  bitcoinDataForTwoWeeks!: BitcoinData;
+  public bitcoinPrices!: CurrencyValue;
+  public bitcoinPriceNow: number = 0;
+  public bitcoinPricePrevious: number = 0;
+  public bitcoinDataForTwoWeeks: any;
   private refreshInterval: Subscription = new Subscription();
 
   constructor(private bitcoinValueService: BitcoinvalueService) {}
 
   ngOnInit() {
     this.refreshData();
+    this.info2Weeks();
     this.refreshInterval = interval(15000).subscribe(() => {
       this.refreshData();
     });
+
+    // console.log(this.bitcoinDataForTwoWeeks);
   }
 
   ngOnDestroy() {
@@ -31,33 +36,52 @@ export class HomePage {
   }
 
   private refreshData() {
-    // Llamada al servicio para obtener precios de Bitcoin
     this.bitcoinValueService.getBitCoinPices().subscribe(
       (prices: CurrencyValue) => {
+        this.bitcoinPricePrevious = this.bitcoinPriceNow;
         this.bitcoinPrices = prices;
         this.bitcoinPriceNow = this.bitcoinPrices.USD;
-        console.log(this.bitcoinPrices.USD);
-        
-
-        // Llamada al servicio para obtener datos de Bitcoin para las últimas dos semanas
-        const twoWeeksAgo = new Date();
-        twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
-
-        this.bitcoinValueService.get2Weeks(twoWeeksAgo).subscribe(
-          (data: BitcoinData) => {
-            this.bitcoinDataForTwoWeeks = data;
-          },
-          (error) => {
-            console.error(
-              'Error obteniendo datos de Bitcoin para las últimas dos semanas:',
-              error
-            );
-          }
-        );
       },
       (error) => {
         console.error('Error obteniendo precios de Bitcoin:', error);
       }
     );
+  }
+
+  private convertirFechas(data: any[]): void {
+    data.forEach((item: any) => {
+      const timestampInSeconds = item.time;
+      const fecha = new Date(timestampInSeconds * 1000);
+      item.time = fecha.toLocaleDateString();
+    });
+  }
+
+  private invertirArray(data: any[]): void {
+    this.bitcoinDataForTwoWeeks = data.reverse();
+  }
+
+  private info2Weeks() {
+    const _cop = 3921;
+    const _eur = 0.92;
+    this.bitcoinValueService.get2WeeksClose('USD').subscribe(
+      (data: any) => {
+        this.bitcoinDataForTwoWeeks = data.Data.Data;
+        this.convertirFechas(this.bitcoinDataForTwoWeeks);
+        this.invertirArray(this.bitcoinDataForTwoWeeks);
+
+        this.bitcoinDataForTwoWeeks.forEach((item: any) => {
+          item['closeCOP'] = (item.close * _cop).toFixed(2);
+          item['closeEUR'] = (item.close * _eur).toFixed(2);
+        });
+        console.log(this.bitcoinDataForTwoWeeks);
+      },
+      (error) => {
+        console.error('Error obteniendo precios de Bitcoin:', error);
+      }
+    );
+  }
+
+  public isPriceIncreasing(): boolean {
+    return this.bitcoinPriceNow > this.bitcoinPricePrevious;
   }
 }

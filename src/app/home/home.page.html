@@ -11,7 +11,10 @@
         <ion-col size="auto"
           ><ion-card-title>BitCoin ahora</ion-card-title></ion-col
         >
-        <ion-col> </ion-col>
+        <ion-col
+          [ngClass]="{'price-increasing': isPriceIncreasing(), 'price-decreasing': !isPriceIncreasing()}"
+          >{{ isPriceIncreasing() ? '🢁' : '🢃' }}</ion-col
+        >
       </ion-row>
       <ion-row size="auto">
         <ion-col
@@ -45,12 +48,67 @@
   </ion-card>
 
   <ion-card>
-    <ion-accordion-group>
+    <ion-accordion-group *ngFor="let data of bitcoinDataForTwoWeeks">
       <ion-accordion value="first">
         <ion-item slot="header" color="light">
-          <ion-label>First Accordion</ion-label>
+          <ion-label>{{data.time}}</ion-label>
         </ion-item>
-        <div class="ion-padding" slot="content">First Content</div>
+        <div class="ion-padding boder-r" slot="content">
+          <ion-grid [fixed]="true">
+            <ion-row>
+              <ion-col size="auto"
+                ><span class="closeprice">$ {{data.close}}</span></ion-col
+              >
+              <ion-col>
+                <ion-row><span style="font-size: 12px">USD</span></ion-row>
+                <ion-row>
+                  <img
+                    src="../../assets/img/eeuu.png"
+                    height="20"
+                    width="20"
+                    alt=""
+                  />
+                </ion-row>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="auto"
+                ><span style="font-size: 20px"
+                  >$ {{data.closeCOP}}</span
+                ></ion-col
+              >
+              <ion-col>
+                <ion-row><span style="font-size: 12px">COP</span></ion-row>
+                <ion-row>
+                  <img
+                    src="../../assets/img/colombia.png"
+                    height="15"
+                    width="15"
+                    alt=""
+                  />
+                </ion-row>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="auto"
+                ><span style="font-size: 20px"
+                  >€ {{data.closeEUR}}</span
+                ></ion-col
+              >
+              <ion-col>
+                <ion-row><span style="font-size: 12px">EUR</span></ion-row>
+                <ion-row>
+                  <img
+                    src="../../assets/img/union-europea.png"
+                    height="15"
+                    width="15"
+                    alt=""
+                  />
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
       </ion-accordion>
     </ion-accordion-group>
   </ion-card>
