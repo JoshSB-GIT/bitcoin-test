@@ -2,29 +2,26 @@
   <ion-toolbar>
     <div class="ja-center">
       <h2>BitCoin {{offlineTitle}}</h2>
-      <img
-        src="../../assets/img/bitcoin (1).png"
-        height="30"
-        width="30"
-        alt=""
-      />
+      <img src="assets/img/bitcoin (1).png" height="30" width="30" alt="" />
     </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="bg-grad">
   <p style="color: rgb(255, 56, 56); text-align: center">{{offlineMessage}}</p>
-  <ion-card class="bg-dark">
+  <ion-card class="">
     <ion-card-header>
       <ion-row>
         <ion-col size="auto"
           ><ion-card-title>BitCoin ahora</ion-card-title></ion-col
         >
-        <ion-col
-          [ngClass]="{'price-increasing': isPriceIncreasing(), 'price-decreasing': !isPriceIncreasing()}"
-          class="scale-in-center"
-          >{{ isPriceIncreasing() ? '🢁' : '🢃' }}</ion-col
-        >
+        <img
+          src="{{ isPriceIncreasing() ? 'assets/img/up-arrow.png' : 'assets/img/down-arrow.png' }}"
+          class="{{ isPriceIncreasing() ? 'price-increasing' : 'price-decreasing' }}"
+          alt="Flecha de precio"
+          width="20"
+          height="20"
+        />
       </ion-row>
       <ion-row size="auto">
         <ion-col
@@ -44,23 +41,28 @@
           <ion-col>
             <ion-row><span>USD</span></ion-row>
             <ion-row>
-              <img
-                src="../../assets/img/eeuu.png"
-                height="30"
-                width="30"
-                alt=""
-              />
+              <img src="assets/img/eeuu.png" height="30" width="30" alt="" />
             </ion-row>
           </ion-col>
         </ion-row>
       </ion-grid>
     </ion-card-content>
   </ion-card>
-  <div class="" style="color: #dbdbdb;">
+
+  <ion-card>
+    <ion-card-header>
+    </ion-card-header>
+
+    <ion-card-content class="ja-center">
+      <img src="assets/img/line-chart.png" alt="" width="200" height="200">
+    </ion-card-content>
+  </ion-card>
+
+  <div class="">
     <div class="ja-center">
       <h2>Datos historicos</h2>
       <img
-        src="../../assets/img/calendar.png"
+        src="assets/img/calendar.png"
         height="25"
         width="25"
         alt=""
@@ -68,7 +70,7 @@
       />
     </div>
   </div>
-  <ion-card style="color: #dbdbdb;">
+  <ion-card style="color: #dbdbdb">
     <ion-accordion-group *ngFor="let data of bitcoinDataForTwoWeeks">
       <ion-accordion value="first">
         <ion-item slot="header" class="bg-dark">
@@ -84,7 +86,7 @@
                 <ion-row><span style="font-size: 12px">USD</span></ion-row>
                 <ion-row>
                   <img
-                    src="../../assets/img/eeuu.png"
+                    src="assets/img/eeuu.png"
                     height="20"
                     width="20"
                     alt=""
@@ -102,7 +104,7 @@
                 <ion-row><span style="font-size: 12px">COP</span></ion-row>
                 <ion-row>
                   <img
-                    src="../../assets/img/colombia.png"
+                    src="assets/img/colombia.png"
                     height="15"
                     width="15"
                     alt=""
@@ -120,7 +122,7 @@
                 <ion-row><span style="font-size: 12px">EUR</span></ion-row>
                 <ion-row>
                   <img
-                    src="../../assets/img/union-europea.png"
+                    src="assets/img/union-europea.png"
                     height="15"
                     width="15"
                     alt=""
