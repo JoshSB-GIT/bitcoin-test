@@ -60,7 +60,6 @@ export class HomePage {
     this.info2Weeks();
     this.refreshInterval = interval(15000).subscribe(() => {
       this.refreshData();
-      // this.info2Weeks();
     });
   }
 
@@ -114,7 +113,6 @@ export class HomePage {
           item['closeCOP'] = (item.close * _cop).toFixed(2);
           item['closeEUR'] = (item.close * _eur).toFixed(2);
         });
-        console.log(this.bitcoinDataForTwoWeeks);
         this.storage.set('bitcoinDataForTwoWeeks', this.bitcoinDataForTwoWeeks);
       },
       (error) => {

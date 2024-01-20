@@ -21,7 +21,6 @@ export class BitcoinvalueService {
   public get2WeeksClose(tsym: string): Observable<BitcoinData> {
     const currentDate = new Date();
     const toTs = Math.floor(currentDate.getTime() / 1000);
-    console.log('now()', toTs);
     
     const limit = 14;
     const dataEndpoint = `
