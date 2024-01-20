@@ -6,8 +6,9 @@ function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 350,
     height: 700,
-    x: width - 350, // Posiciona la ventana en el lado derecho
-    y: 0, // Posiciona la ventana en la parte superior
+    x: width - 350,
+    y: 0,
+    resizable: false,
     webPreferences: {
       nodeIntegration: true,
     },
